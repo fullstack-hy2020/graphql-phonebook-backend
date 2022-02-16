@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const Person = require('./models/person')
 
 const MONGODB_URI =
-  'mongodb+srv://fullstack:fullstack@cluster0.o1opl.mongodb.net/graphqlPhoneApp?retryWrites=true&w=majority'
+  'mongodb+srv://urlhere'
 
 console.log('connecting to', MONGODB_URI)
 
