@@ -99,7 +99,7 @@ const resolvers = {
           invalidArgs: args,
         })
       }
-      return person.save()
+      return person
     },
   },
 }
