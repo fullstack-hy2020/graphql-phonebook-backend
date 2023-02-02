@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.3.2",
+    "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
+    "mongoose": "^6.9.0",
     "nodemon": "^2.0.20",
     "uuid": "^9.0.0"
   }
