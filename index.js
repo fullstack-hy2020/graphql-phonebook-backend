@@ -169,6 +169,7 @@ const resolvers = {
     editNumber: async (root, args) => {
       const person = await Person.findOne({ name: args.name })
       person.phone = args.phone
+      
       try {
         await person.save()
       } catch (error) {
@@ -180,6 +181,8 @@ const resolvers = {
           }
         })
       }
+
+      return person
     },
     createUser: async (root, args) => {
       const user = new User({ username: args.username })
