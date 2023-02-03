@@ -17,6 +17,8 @@ const User = require('./models/user')
 const typeDefs = require('./schema')
 const resolvers = require('./resolvers')
 
+
+
 require('dotenv').config()
 
 const MONGODB_URI = process.env.MONGODB_URI
