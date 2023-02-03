@@ -195,8 +195,6 @@ const resolvers = {
             }
           })
         })
-
-      return user
     },
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
