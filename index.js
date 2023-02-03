@@ -122,6 +122,8 @@ const resolvers = {
           }
         })
       }
+
+      return person
     },
     editNumber: async (root, args) => {
       const person = await Person.findOne({ name: args.name })
@@ -137,6 +139,8 @@ const resolvers = {
           }
         })
       }
+
+      return person
     },
   }
 }
