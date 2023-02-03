@@ -180,6 +180,7 @@ const resolvers = {
           }
         })
       }
+      return person
     },
     createUser: async (root, args) => {
       const user = new User({ username: args.username })
@@ -194,6 +195,8 @@ const resolvers = {
             }
           })
         })
+
+      return user
     },
     login: async (root, args) => {
       const user = await User.findOne({ username: args.username })
