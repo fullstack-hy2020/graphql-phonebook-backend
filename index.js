@@ -24,10 +24,10 @@ let persons = [
   },
 ]
 
-const typeDefs = `
+const typeDefs = /* GraphQL */ `
   type Address {
     street: String!
-    city: String! 
+    city: String!
   }
 
   type Person {
