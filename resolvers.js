@@ -23,12 +23,23 @@ const resolvers = {
   },
   Mutation: {
     addPerson: async (root, args) => {
+      const nameExists = await Person.exists({ name: args.name })
+
+      if (nameExists) {
+        throw new GraphQLError(`Name must be unique: ${args.name}`, {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+          },
+        })
+      }
+
       const person = new Person({ ...args })
 
       try {
         await person.save()
       } catch (error) {
-        throw new GraphQLError('Saving person failed', {
+        throw new GraphQLError(`Saving person failed: ${error.message}`, {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.name,
@@ -51,7 +62,7 @@ const resolvers = {
       try {
         await person.save()
       } catch (error) {
-        throw new GraphQLError('Saving number failed', {
+        throw new GraphQLError(`Saving number failed: ${error.message}`, {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.name,
