@@ -28,23 +28,35 @@ const resolvers = {
   },
   Mutation: {
     addPerson: async (root, args, context) => {
-      const person = new Person({ ...args })
       const currentUser = context.currentUser
 
       if (!currentUser) {
         throw new GraphQLError('not authenticated', {
           extensions: {
-            code: 'BAD_USER_INPUT',
+            code: 'UNAUTHENTICATED',
           },
         })
       }
+
+      const nameExists = await Person.exists({ name: args.name })
+
+      if (nameExists) {
+        throw new GraphQLError(`Name must be unique: ${args.name}`, {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+          },
+        })
+      }
+
+      const person = new Person({ ...args })
 
       try {
         await person.save()
         currentUser.friends = currentUser.friends.concat(person)
         await currentUser.save()
       } catch (error) {
-        throw new GraphQLError('Saving user failed', {
+        throw new GraphQLError(`Saving person failed: ${error.message}`, {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.name,
@@ -67,7 +79,7 @@ const resolvers = {
       try {
         await person.save()
       } catch (error) {
-        throw new GraphQLError('Saving number failed', {
+        throw new GraphQLError(`Saving number failed: ${error.message}`, {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.name,
@@ -82,7 +94,7 @@ const resolvers = {
       const user = new User({ username: args.username })
 
       return user.save().catch((error) => {
-        throw new GraphQLError('Creating the user failed', {
+        throw new GraphQLError(`Creating the user failed: ${error.message}`, {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.username,
@@ -111,8 +123,8 @@ const resolvers = {
     },
     addAsFriend: async (root, args, { currentUser }) => {
       if (!currentUser) {
-        throw new GraphQLError('wrong credentials', {
-          extensions: { code: 'BAD_USER_INPUT' },
+        throw new GraphQLError('not authenticated', {
+          extensions: { code: 'UNAUTHENTICATED' },
         })
       }
 
