@@ -12,7 +12,10 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^5.0.0",
+    "@as-integrations/express5": "^1.1.2",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
+    "express": "^5.2.1",
     "graphql": "^16.11.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
