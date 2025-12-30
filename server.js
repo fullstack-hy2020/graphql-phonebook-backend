@@ -28,7 +28,7 @@ const startServer = async (port) => {
   const serverCleanup = useServer({ schema }, wsServer)
 
   const server = new ApolloServer({
-    schema: makeExecutableSchema({ typeDefs, resolvers }),
+    schema,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {
